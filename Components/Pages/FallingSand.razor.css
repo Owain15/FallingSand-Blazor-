@@ -1,0 +1,29 @@
+﻿.AppWindow{
+    display:block;
+    height: 400px;
+    width: 100%;
+
+    border: solid 2px black;
+}
+.Display {
+    display: table;
+    height: 100%;
+    width: 100%;
+    border: solid 2px black;
+}
+/*.Display-Row {
+    display: table-row;
+    height: 100%;
+    width: 100%;
+    border: solid 2px red;
+    background-color: black;
+}*/
+.Display-Pixel {
+    display: table-cell;
+    height: 5px;
+    width: 5px;
+    /*border: solid 2px red;*/
+    /*background-color: black;*/
+}
+
+
