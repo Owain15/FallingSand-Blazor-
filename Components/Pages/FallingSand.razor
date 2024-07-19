@@ -1,4 +1,6 @@
-﻿@page "/"
+﻿@page "/";
+@rendermode InteractiveServer
+
 
 <PageTitle>Falling Sand</PageTitle>
 
@@ -7,16 +9,17 @@
 <hr>
 
 <div class="AppWindow">
+	
+	<div class="Display"  >
 
-	<div class="Display">
-
-		@for(int y = 0; y < Display.pixelData.GetLength(1); y ++)
+		
+		@for(int y = 0; y < displayData.GetLength(1); y ++)
 		{   
 			<div class="Display-Row">
 			
-				@for (int x = 0; x < Display.pixelData.GetLength(0); x++)
+				@for (int x = 0; x < displayData.GetLength(0); x++)
 			    {
-					RGB pixel = Display.GetCellColor(x, y);
+					RGB pixel = Display.GetCellColor(displayData, x, y);
 					string setPixelColor = $"background-color:rgb({pixel.Red},{pixel.Blue},{pixel.Green});";
 					
 					<span class="Display-Pixel" style="@setPixelColor"></span>
@@ -25,7 +28,12 @@
 
 			</div>
 		}
-
+		<div>
+			<h3>timmer</h3>
+			<hr />
+			<div>@testTimerReadout</div>
+		</div>
+		
 	</div>
-
+	
 </div>
