@@ -19,30 +19,18 @@
 			
 				@for (int x = 0; x < displayData.GetLength(0); x++)
 			    {
+					int pixelX = x;
+					int pixelY = y;
 					RGB pixel = Display.GetCellColor(displayData, x, y);
 					string setPixelColor = $"background-color:rgb({pixel.Red},{pixel.Blue},{pixel.Green});";
 					
-					<span class="Display-Pixel" style="@setPixelColor"></span>
+					<span class="Display-Pixel" @onclick=" e => AddSand(pixelX,pixelY)" style="@setPixelColor"></span>
 					
 			    }
 
 			</div>
 		}
-		<div>
-
-			<h3>Test Timmers</h3>
-			
-			<hr />
-			
-			<div ontimeupdate="">Test Clock Read Out Timed = @testClockReadOut</div>
-			
-			<hr />
-			
-			<div><span></span>Test Clock Read Out onclick = <span>@testClockReadOut</span></div>
-			<button @onclick="SetClockRender">Update</button>
-
-		</div>
-		
+	
 	</div>
 	
 </div>
