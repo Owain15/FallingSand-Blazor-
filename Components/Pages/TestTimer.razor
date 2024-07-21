@@ -1,0 +1,42 @@
+﻿@page "/TestTimer";
+@rendermode InteractiveServer
+
+<h3>TestTimer</h3>
+
+<hr />
+<hr />
+
+<div class="container_timer">
+	
+	<div class="container_timer_header">
+
+	  <h4>Timer</h4>
+	  
+    </div>
+	
+	<div class="container_timer_display">
+	
+		<div class="container_timer_display_readout">
+		
+			<p>Time: @timeSpan.ToString(@"hh\:mm\:ss") </p>
+		
+		</div>
+		
+		<div class="container_timer_display_controls">
+
+			<button class="container_timer_display_controls_button" onclick="@StopwatchStart">Start</button>
+
+			<button class="container_timer_display_controls_button" onclick="@StopwatchStop">Stop</button>
+
+			<button class="container_timer_display_controls_button" onclick="@StopwatchReset">Reset</button>
+
+		</div>
+	
+	</div>
+	
+	
+
+</div>
+
+<hr />
+<hr />

@@ -20,13 +20,16 @@ namespace FallingSand.Components.Pages
 		bool[,] gameData;
         Pixel[,] displayData;
 
-        public int testTimerReadout = 50;
-        
+        public int intervilCount = 50;
+        public string testClockReadOut;
 
         protected override void OnInitialized()
         {
+            testClockReadOut = intervilCount.ToString();
             
-            timer = new System.Timers.Timer(1);
+            //timer = new System.Timers.Timer();
+
+            SandList.Clear();
 
             gameData = new bool[GridSizeX,GridSizeY];
           
@@ -50,29 +53,28 @@ namespace FallingSand.Components.Pages
 		void StartTimmer()
         {
 
-            timer = new System.Timers.Timer();
-            timer.Interval = RefreshRate;
-			//timer.Elapsed += new ElapsedEventHandler(RenderTimerEvent);
-			//timer.Elapsed += async (object? sender, ElapsedEventArgs e) =>
-			//{
-			//	//Console.WriteLine("timer.Intervel Hit");
-			//	//Console.WriteLine($"timerReadOut = {testTimerReadout}");
-			//	testTimerReadout++;
-			//	await InvokeAsync(StateHasChanged);
-			//};
+            timer = new System.Timers.Timer(RefreshRate);
+			timer.Elapsed += HandelTimeElapsedEvent;
 			timer.AutoReset = true;
             timer.Enabled = true;
             
         }
 
       
-        public void RenderTimerEvent(Object source, System.Timers.ElapsedEventArgs e)
+        public void HandelTimeElapsedEvent(Object source , System.Timers.ElapsedEventArgs e)
         {
-			Console.WriteLine("timer.Intervel Hit");
-			Console.WriteLine($"timerReadOut = {testTimerReadout}");
-			testTimerReadout++;
-            base.ShouldRender();
+		
+			intervilCount++;
+            
+            Console.WriteLine($"intervelCount = {intervilCount}");
+            
+            //base.ShouldRender();
             //StateHasChanged();
+        }
+        private void SetClockRender() 
+        {
+            Console.WriteLine("testClockReadOut Updated");
+            testClockReadOut = intervilCount.ToString();
         }
 
 		void InitialiseDisplay()

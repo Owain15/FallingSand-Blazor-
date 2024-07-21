@@ -29,9 +29,18 @@
 			</div>
 		}
 		<div>
-			<h3>timmer</h3>
+
+			<h3>Test Timmers</h3>
+			
 			<hr />
-			<div>@testTimerReadout</div>
+			
+			<div ontimeupdate="">Test Clock Read Out Timed = @testClockReadOut</div>
+			
+			<hr />
+			
+			<div><span></span>Test Clock Read Out onclick = <span>@testClockReadOut</span></div>
+			<button @onclick="SetClockRender">Update</button>
+
 		</div>
 		
 	</div>

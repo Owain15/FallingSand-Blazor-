@@ -1,0 +1,77 @@
+﻿body {
+}
+
+.container_timer {
+    display: block;
+    height: 100%;
+    width: 50%;
+    border: outset 10px rgb(65, 105, 205);
+    border-radius: 20px;
+    padding: 5px;
+    background-color: rgb(25, 55, 130);
+}
+
+.container_timer_header {
+    display: flex;
+    justify-content: start;
+    border: outset 5px rgb(67, 107, 207);
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-top:5px;
+    background-color: rgb(85, 165, 220);
+    color: rgb(25, 55, 130);
+}
+
+.container_timer_display {
+  
+    display:  block;
+    height: 100%;
+    width: 100%;
+    border: outset 5px rgb(67, 107, 207);
+    border-radius: 20px;
+    padding: 10px;
+   
+}
+
+.container_timer_display_readout {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    padding-left: 50px;
+    margin-top: 10px;
+    color: rgb(85, 165, 220);
+}
+
+.container_timer_display_controls {
+    
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    
+}
+
+.container_timer_display_controls_button {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: outset 5px rgb(67, 107, 207);
+    border-radius: 20px;
+    background-color: rgb(85, 165, 220);
+    color: rgb(25, 55, 130);
+}
+    .container_timer_display_controls_button:hover {
+  
+        background-color: rgb(25, 55, 130);
+        color: rgb(85, 165, 220);
+        cursor:grab;
+
+    }
+
+    .container_timer_display_controls_button:active {
+        background-color: rgb(25, 55, 130);
+        color: rgb(255, 255, 255);
+        border-color: rgb(255, 255, 255);
+        cursor:grabbing;
+    }
