@@ -1,0 +1,37 @@
+﻿@page "/TestBackground";
+@rendermode InteractiveServer
+
+<h3>TestBackground</h3>
+
+<hr />
+<hr />
+
+<div class="AppWindow">
+
+	<div class="Display">
+
+
+		@for (int y = 0; y <testDisplayData.GetLength(1); y++)
+		{
+			<div class="Display-Row">
+
+				@for (int x = 0; x < testDisplayData.GetLength(0); x++)
+				{
+					int pixelX = x;
+					int pixelY = y;
+					RGB pixel = Display.GetCellColor(testDisplayData, x, y);
+					string setPixelColor = $"background-color:rgb({pixel.Red},{pixel.Blue},{pixel.Green});";
+
+					<span class="Display-Pixel" style="@setPixelColor"></span>
+
+				}
+
+			</div>
+		}
+
+	</div>
+
+</div>
+
+<hr />
+<hr />

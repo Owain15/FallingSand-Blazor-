@@ -15,9 +15,8 @@ namespace FallingSand.Components.Pages
         int GridSizeY = 60;
 
         System.Timers.Timer timer;
-        int RefreshRate = 100;
+        int RefreshRate = 15;
 
-        //List<(int,int)> SandList = new List<(int,int)>();
 		bool[,] gameData;
         Pixel[,] displayData;
 
@@ -27,8 +26,6 @@ namespace FallingSand.Components.Pages
 
         protected override void OnInitialized()
         {
-
-            //SandList.Clear();
 
             gameData = new bool[GridSizeX,GridSizeY];
           
@@ -60,14 +57,17 @@ namespace FallingSand.Components.Pages
         }
 
       
-        public void HandelTimeElapsedEvent(Object state , System.Timers.ElapsedEventArgs e)
+        private void HandelTimeElapsedEvent(Object state , System.Timers.ElapsedEventArgs e)
         {
+            // check if Render, Then Process Game Data Runs Faster.
 
-            gameData = UpdateGameData();
+            Render();
+
+            UpdateGameData();
 
             BuildDisplay();
 
-            Render();
+           // Render();
           
 		}
     
@@ -97,57 +97,54 @@ namespace FallingSand.Components.Pages
 
         void Render()   { InvokeAsync(StateHasChanged); }
 
-        bool[,] UpdateGameData()
-        {
-            bool[,] updatedGameData = new bool[GridSizeX, GridSizeY];
+        void UpdateGameData()
+        { 
 
-            for(int y = 0; y < gameData.GetLength(1); y++)
+            for(int y = gameData.GetLength(1)-1; y > -1 ; y--)
             {
-                for(int x = 0; x < gameData.GetLength(0); x++)
+                for(int x = gameData.GetLength(0)-1; x > -1 ; x--)
                 {
                     if (gameData[x, y])
                     {
-                        if( y + 1 > gameData.GetLength(1)-1) { updatedGameData[x, y] = true; }
-                        else if (!gameData[x, y + 1]) { updatedGameData[x, y + 1] = true;}
-                        else if (gameData[x, y + 1]) {updatedGameData = PileSand(x,y, gameData,updatedGameData); }
+                        if( y + 1 > gameData.GetLength(1)-1) { break; }
+                        else if (!gameData[x, y + 1]) { gameData[x, y + 1] = true; gameData[x, y] = false; }
+                        else if (gameData[x, y + 1]) {PileSand(x,y); }
                     }
                 }
 
             }
-            return updatedGameData;
+        
 
         }
 
-        bool[,] PileSand(int x, int y, bool[,] gameData, bool[,] updatedGameData)
+        void PileSand(int x, int y)
         {
 
             var tryLeftFirst = true;
-            if (random.Next() > 0.5) { tryLeftFirst = false; }
+            if (random.NextDouble() > 0.5) { tryLeftFirst = false; }
 
             if (x - 1 >= 0 && tryLeftFirst)
             {
 
-                if (!gameData[x - 1, y + 1]) { updatedGameData[x - 1, y + 1] = true; }
+                if (!gameData[x - 1, y + 1]) { gameData[x - 1, y + 1] = true; gameData[x, y] = false; }
                 else if(x + 1 <= gameData.GetLength(0) - 1 && !gameData[x + 1, y + 1])
-                { updatedGameData[x + 1, y + 1] = true; }
-                else{ updatedGameData[x, y] = true; }
+                { gameData[x + 1, y + 1] = true; gameData[x, y] = false; }
+             
             }
             else if (x + 1 <= gameData.GetLength(0)-1 && !tryLeftFirst)
             {
-				if (x + 1 <= gameData.GetLength(0) - 1 && !gameData[x + 1, y + 1])
-				{ updatedGameData[x + 1, y + 1] = true; }
-                else if (x -1 >=0 &&!gameData[x - 1, y + 1]) { updatedGameData[x - 1, y + 1] = true; }
-				else { updatedGameData[x, y] = true; }
+				if (x + 1 < gameData.GetLength(0) && !gameData[x + 1, y + 1])
+				{ gameData[x + 1, y + 1] = true; gameData[x, y] = false; }
+                else if (x -1 >=0 && !gameData[x - 1, y + 1]) 
+                { gameData[x - 1, y + 1] = true; gameData[x, y] = false; }
 
 			}
-            else { Console.WriteLine("ERORR.NextSandLocationNotFound!"); }
-              
-          
 
-            return updatedGameData;
         }
 
-        void AddSand(int x, int y){ if (!gameData[x, y]) { gameData[x, y] = true; } }   
+        void AddSand(int x, int y){ if (!gameData[x, y]) { gameData[x, y] = true; } }
+
+		
 	}
 
     
@@ -178,6 +175,35 @@ namespace FallingSand.Components.Pages
 		{
 			return displayData[x, y].Color;
 		}
+
+        public static Pixel[,] GetPixelDataFromIntArray(int[,] backgroundData)
+		{
+			Pixel[,] pixelData = new Pixel[backgroundData.GetLength(0), backgroundData.GetLength(1)];
+
+			for (int y = 0; y < backgroundData.GetLength(1); y++)
+			{
+				for (int x = 0; x < backgroundData.GetLength(0); x++)
+				{
+					pixelData[x, y] = new Pixel(x, y);
+                    switch(backgroundData[x,y])
+                    {
+                        case 0: { pixelData[x, y].SetColor(50, 0, 50); } break;
+						case 1: { pixelData[x, y].SetColor(100, 0, 100); } break;
+						case 2: { pixelData[x, y].SetColor(150, 0, 150); } break;
+						case 3: { pixelData[x, y].SetColor(200, 0, 200); } break;
+						case 4: { pixelData[x, y].SetColor(250, 0, 250); } break;
+						default: { Console.WriteLine($"Pixel Reference Out Of Range. {x},{y}. Value{backgroundData[x,y]}."); }break;
+
+                    }
+
+				}
+
+
+			}
+
+			return pixelData;
+		}
+
 	}
    
    
